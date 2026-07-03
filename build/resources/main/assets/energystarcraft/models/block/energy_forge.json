@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "energystarcraft:block/energy_forge_top",
-    "bottom": "energystarcraft:block/energy_forge_bottom",
-    "side": "energystarcraft:block/energy_forge_side"
-  }
-}

@@ -5,7 +5,7 @@ issueTrackerURL = ""
 
 [[mods]]
 modId = "energystarcraft"
-version = "1.0.0"
+version = "1.0.1"
 displayName = "Energy Starcraft"
 authors = "Developer"
 description = '''Craft Nether Stars using FE energy. Place the Energy Forge, feed 350M FE from any energy mod (Mekanism, AE2, Thermal) and get automatic production.'''
@@ -13,13 +13,13 @@ description = '''Craft Nether Stars using FE energy. Place the Energy Forge, fee
 [[dependencies.energystarcraft]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.1.280,)"
+versionRange = "[21.11.42,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.energystarcraft]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.2,1.21.3)"
+versionRange = "[1.21.11,1.22)"
 ordering = "NONE"
 side = "BOTH"
