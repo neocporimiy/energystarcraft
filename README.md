@@ -12,18 +12,6 @@
 
 ---
 
-## ✨ Features
-
-<div align="center">
-
-| Feature | Description |
-|:-------:|:------------|
-| 🔮 **Automated Crafting** | Automatically crafts Nether Stars from FE energy |
-| ⚡ **350M FE = 1 Star** | Efficient energy-to-item conversion |
-| 🔌 **Universal Energy** | Compatible with Mekanism, AE2, Thermal, and other mods |
-| 🎨 **Custom GUI** | Beautiful animated energy bar with particle effects |
-| 📦 **Creative Tab** | Items available in creative inventory |
-
 </div>
 
 ---
@@ -31,7 +19,7 @@
 ## 🛠️ Installation
 
 1. **Download** the latest release from [Releases](../../releases)
-2. **Install** [NeoForge 21.1.233+](https://neoforged.net/)
+2. **Install** [NeoForge 21.11.42+](https://neoforged.net/)
 3. **Drop** `energystarcraft-*.jar` into your `mods` folder
 4. **Enjoy!** 🎉
 
