@@ -36,33 +36,6 @@
 3. **Drop** `energystarcraft-*.jar` into your `mods` folder
 4. **Enjoy!** 🎉
 
-
-### Supported Energy Mods
-
-<div align="center">
-
-![Mekanism](https://img.shields.io/badge/-Mekanism-00ad43?style=flat-square) &nbsp;
-![Applied Energistics 2](https://img.shields.io/badge/-AE2-22c55e?style=flat-square) &nbsp;
-![Thermal Series](https://img.shields.io/badge/-Thermal-ef4444?style=flat-square) &nbsp;
-![Ender IO](https://img.shields.io/badge/-EnderIO-a855f7?style=flat-square) &nbsp;
-![Flux Networks](https://img.shields.io/badge/-FluxNetworks-3b82f6?style=flat-square)
-
-*Any mod using Forge's energy API*
-
-</div>
-
----
-
-## 📦 Requirements
-
-<div align="center">
-
-| Software | Version |
-|:---------|:--------|
-| Minecraft | 1.21.1 - 1.21.2 |
-| NeoForge | 21.1.233+ |
-| Java | 21 |
-
 </div>
 
 ---
