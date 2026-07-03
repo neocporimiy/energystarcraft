@@ -1,34 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.BlockPos
- *  net.minecraft.core.Direction
- *  net.minecraft.core.HolderLookup$Provider
- *  net.minecraft.nbt.CompoundTag
- *  net.minecraft.nbt.Tag
- *  net.minecraft.network.chat.Component
- *  net.minecraft.network.protocol.Packet
- *  net.minecraft.network.protocol.game.ClientGamePacketListener
- *  net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
- *  net.minecraft.server.level.ServerPlayer
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.entity.player.Inventory
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.inventory.AbstractContainerMenu
- *  net.minecraft.world.inventory.ContainerData
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.item.Items
- *  net.minecraft.world.level.ItemLike
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.state.BlockState
- *  net.neoforged.neoforge.energy.IEnergyStorage
- *  net.neoforged.neoforge.items.ItemStackHandler
- *  org.jetbrains.annotations.NotNull
- *  org.jetbrains.annotations.Nullable
- */
 package com.energystarcraft.blockentity;
 
 import com.energystarcraft.EnergyStarcraft;

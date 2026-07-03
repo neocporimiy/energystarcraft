@@ -1,16 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.neoforged.api.distmarker.Dist
- *  net.neoforged.bus.api.IEventBus
- *  net.neoforged.bus.api.SubscribeEvent
- *  net.neoforged.fml.common.EventBusSubscriber
- *  net.neoforged.fml.common.Mod
- *  net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
- *  org.slf4j.Logger
- *  org.slf4j.LoggerFactory
- */
 package com.energystarcraft;
 
 import com.energystarcraft.registry.ModBlockEntities;

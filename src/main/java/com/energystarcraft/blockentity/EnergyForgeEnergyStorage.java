@@ -1,9 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.neoforged.neoforge.energy.EnergyStorage
- */
 package com.energystarcraft.blockentity;
 
 import net.neoforged.neoforge.energy.EnergyStorage;

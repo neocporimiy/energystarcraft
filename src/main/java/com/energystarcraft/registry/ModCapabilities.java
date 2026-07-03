@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.Direction
- *  net.neoforged.bus.api.SubscribeEvent
- *  net.neoforged.fml.common.EventBusSubscriber
- *  net.neoforged.neoforge.capabilities.Capabilities$EnergyStorage
- *  net.neoforged.neoforge.capabilities.Capabilities$ItemHandler
- *  net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
- */
 package com.energystarcraft.registry;
 
 import com.energystarcraft.registry.ModBlockEntities;

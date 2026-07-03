@@ -1,24 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.mojang.serialization.MapCodec
- *  net.minecraft.core.BlockPos
- *  net.minecraft.server.level.ServerPlayer
- *  net.minecraft.world.InteractionResult
- *  net.minecraft.world.MenuProvider
- *  net.minecraft.world.entity.player.Player
- *  net.minecraft.world.level.Level
- *  net.minecraft.world.level.block.BaseEntityBlock
- *  net.minecraft.world.level.block.RenderShape
- *  net.minecraft.world.level.block.entity.BlockEntity
- *  net.minecraft.world.level.block.entity.BlockEntityTicker
- *  net.minecraft.world.level.block.entity.BlockEntityType
- *  net.minecraft.world.level.block.state.BlockBehaviour$Properties
- *  net.minecraft.world.level.block.state.BlockState
- *  net.minecraft.world.phys.BlockHitResult
- *  org.jetbrains.annotations.Nullable
- */
 package com.energystarcraft.block;
 
 import com.energystarcraft.blockentity.EnergyForgeBlockEntity;

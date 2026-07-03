@@ -1,15 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.network.chat.Component
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.world.item.CreativeModeTab
- *  net.minecraft.world.item.ItemStack
- *  net.minecraft.world.level.ItemLike
- *  net.neoforged.neoforge.registries.DeferredRegister
- */
 package com.energystarcraft.registry;
 
 import com.energystarcraft.registry.ModItems;

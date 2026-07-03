@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.world.item.BlockItem
- *  net.minecraft.world.item.Item$Properties
- *  net.minecraft.world.level.block.Block
- *  net.neoforged.neoforge.registries.DeferredItem
- *  net.neoforged.neoforge.registries.DeferredRegister
- *  net.neoforged.neoforge.registries.DeferredRegister$Items
- */
 package com.energystarcraft.registry;
 
 import com.energystarcraft.registry.ModBlocks;

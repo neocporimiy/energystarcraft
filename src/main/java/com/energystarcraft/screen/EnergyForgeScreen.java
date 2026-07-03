@@ -1,4 +1,3 @@
-// EnergyForgeScreen.java
 package com.energystarcraft.screen;
 
 import com.energystarcraft.menu.EnergyForgeMenu;
@@ -17,94 +16,71 @@ import net.minecraft.world.inventory.Slot;
 
 public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> {
 
-    // ── Форматтер чисел ─────────────────────────────────────────────
     private static final NumberFormat NUM = NumberFormat.getNumberInstance(Locale.US);
 
-    // ── Размеры GUI — берём из Menu ─────────────────────────────────
-    private static final int W = EnergyForgeMenu.GUI_W;   // 176
-    private static final int H = EnergyForgeMenu.GUI_H;   // 166
+    private static final int W = EnergyForgeMenu.GUI_W;
+    private static final int H = EnergyForgeMenu.GUI_H;
 
-    // ── Энергетический бар — берём из Menu ─────────────────────────
-    private static final int BAR_X = EnergyForgeMenu.BAR_X;  // 8
-    private static final int BAR_Y = EnergyForgeMenu.BAR_Y;  // 17
-    private static final int BAR_W = EnergyForgeMenu.BAR_W;  // 16
-    private static final int BAR_H = EnergyForgeMenu.BAR_H;  // 52
+    private static final int BAR_X = EnergyForgeMenu.BAR_X;
+    private static final int BAR_Y = EnergyForgeMenu.BAR_Y;
+    private static final int BAR_W = EnergyForgeMenu.BAR_W;
+    private static final int BAR_H = EnergyForgeMenu.BAR_H;
 
-    // ── Выходной слот — берём из Menu ──────────────────────────────
-    // Menu регистрирует слот как (OUTPUT_SLOT_X, OUTPUT_SLOT_Y)
-    // Screen рисует рамку на (OUTPUT_SLOT_X - 1, OUTPUT_SLOT_Y - 1)
-    private static final int OUT_X = EnergyForgeMenu.OUTPUT_SLOT_X; // 110
-    private static final int OUT_Y = EnergyForgeMenu.OUTPUT_SLOT_Y; // 35
+    private static final int OUT_X = EnergyForgeMenu.OUTPUT_SLOT_X;
+    private static final int OUT_Y = EnergyForgeMenu.OUTPUT_SLOT_Y;
 
-    // ── Инвентарь — берём из Menu ───────────────────────────────────
-    private static final int INV_START_X = EnergyForgeMenu.INV_START_X; // 8
-    private static final int INV_START_Y = EnergyForgeMenu.INV_START_Y; // 90
-    private static final int HOTBAR_Y    = EnergyForgeMenu.HOTBAR_Y;    // 148
+    private static final int INV_START_X = EnergyForgeMenu.INV_START_X;
+    private static final int INV_START_Y = EnergyForgeMenu.INV_START_Y;
+    private static final int HOTBAR_Y    = EnergyForgeMenu.HOTBAR_Y;
 
-    // ── Разделитель ─────────────────────────────────────────────────
-    private static final int DIVIDER_Y = EnergyForgeMenu.DIVIDER_Y; // 75
+    private static final int DIVIDER_Y = EnergyForgeMenu.DIVIDER_Y;
 
-    // ── Цвета (ARGB, alpha = FF если не указано иначе) ───────────────
-    private static final int BG_DARK        = 0xFF1A1226; // -15071194
-    private static final int BG_PANEL       = 0xFF3D283C; // -12772772
-    private static final int EDGE_BRIGHT    = 0xFFB8B8FF; // -4686849
-    private static final int EDGE_GLOW      = 0xFF9D4EE8; // -6467864  (также используется как акцент)
-    private static final int EDGE_DARK      = 0xFF1F1030; // -14743504
-    private static final int SLOT_BG        = 0xFF272800; // -14020800
-    private static final int SLOT_INNER     = 0xFF4C4C50; // -11919504
-    private static final int BAR_EMPTY      = 0xFF0E0515; // -16121835
-    private static final int BAR_FILL_LOW   = 0xFF7A2738; // -8773704
-    private static final int BAR_FILL_HI    = 0xFFB08EFF; // -5222145
-    private static final int BAR_DONE       = 0xFFFFD700; // -10496    (золото)
-    private static final int TEXT_LABEL     = 0xFF50FF9D; // -5207843
-    private static final int TEXT_VALUE     = 0xFFE8B8FF; // -1522177
-    private static final int TEXT_MUTED     = 0xFF7A3059; // -8759911
-    private static final int TEXT_READY     = 0xFFFFD700; // -10496
-    private static final int TEXT_TITLE     = 0xFFFFD8FF; // -9985
+    private static final int BG_DARK        = 0xFF1A1226;
+    private static final int BG_PANEL       = 0xFF3D283C;
+    private static final int EDGE_BRIGHT    = 0xFFB8B8FF;
+    private static final int EDGE_GLOW      = 0xFF9D4EE8;
+    private static final int EDGE_DARK      = 0xFF1F1030;
+    private static final int SLOT_BG        = 0xFF272800;
+    private static final int SLOT_INNER     = 0xFF4C4C50;
+    private static final int BAR_EMPTY      = 0xFF0E0515;
+    private static final int BAR_FILL_LOW   = 0xFF7A2738;
+    private static final int BAR_FILL_HI    = 0xFFB08EFF;
+    private static final int BAR_DONE       = 0xFFFFD700;
+    private static final int TEXT_LABEL     = 0xFF50FF9D;
+    private static final int TEXT_VALUE     = 0xFFE8B8FF;
+    private static final int TEXT_MUTED     = 0xFF7A3059;
+    private static final int TEXT_READY     = 0xFFFFD700;
+    private static final int TEXT_TITLE     = 0xFFFFD8FF;
 
-    // ── Искры ───────────────────────────────────────────────────────
     private static final int SPARKLE_COUNT = 14;
     private final Sparkle[] sparkles = new Sparkle[SPARKLE_COUNT];
     private final Random    random   = new Random();
 
-    // ── Анимация ────────────────────────────────────────────────────
     private float animTime;
     private float smoothedEnergyHeight;
     private long  lastTimeMs = System.currentTimeMillis();
 
-    // ════════════════════════════════════════════════════════════════
-    //  Конструктор
-    // ════════════════════════════════════════════════════════════════
     public EnergyForgeScreen(EnergyForgeMenu menu,
                              Inventory inventory,
                              Component title) {
         super(menu, inventory, title);
         this.imageWidth   = W;
         this.imageHeight  = H;
-        // Прячем стандартные лейблы (рисуем сами)
         this.titleLabelY     = -1000;
         this.inventoryLabelY = -1000;
-        // Сдвигаем всю панель вниз на 20px
         this.topPos += 20;
         for (int i = 0; i < SPARKLE_COUNT; i++) {
             sparkles[i] = new Sparkle(random);
         }
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  init
-    // ════════════════════════════════════════════════════════════════
     @Override
     protected void init() {
         super.init();
-        // Сдвигаем панель влево на 10px (чтобы центрировать с учётом бара)
         this.leftPos -= 10;
         this.smoothedEnergyHeight = menu.getScaledEnergy(BAR_H);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Анимация
-    // ════════════════════════════════════════════════════════════════
     private void updateAnimations() {
         long  now          = System.currentTimeMillis();
         float deltaSeconds = (float) (now - lastTimeMs) / 1000f;
@@ -120,9 +96,6 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         for (Sparkle s : sparkles) s.update(random, deltaSeconds);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  renderBg
-    // ════════════════════════════════════════════════════════════════
     @Override
     protected void renderBg(GuiGraphics g, float pt, int mx, int my) {
         updateAnimations();
@@ -134,22 +107,15 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         drawDivider(g, x, y);
         drawBar(g, x, y);
 
-        // Рамка вокруг выходного слота
-        // Слот зарегистрирован в Menu как (OUT_X, OUT_Y) относительно leftPos/topPos
         drawSlot(g, x + OUT_X - 1, y + OUT_Y - 1, true);
 
         drawInventory(g, x, y);
         drawLabels(g, x, y);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Фон панели
-    // ════════════════════════════════════════════════════════════════
     private void drawPanelBackground(GuiGraphics g, int x, int y) {
-        // Основной фон
         g.fill(x, y, x + W, y + H, BG_DARK);
 
-        // Градиент сверху (фиолетовый отблеск)
         for (int i = 0; i < 24; i++) {
             int alpha = 32 - i;
             if (alpha <= 0) continue;
@@ -157,10 +123,8 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
                    (alpha << 24) | (EDGE_GLOW & 0xFFFFFF));
         }
 
-        // Верхняя подпанель (от y+3 до DIVIDER_Y)
         g.fill(x + 3, y + 3, x + W - 3, y + DIVIDER_Y - 3, BG_PANEL);
 
-        // Световой блик внутри верхней подпанели
         for (int i = 0; i < 12; i++) {
             int alpha = 21 - i;
             if (alpha <= 0) continue;
@@ -172,9 +136,6 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         fancyBevel(g, x,     y,     W,     H);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Искры
-    // ════════════════════════════════════════════════════════════════
     private void drawSparkles(GuiGraphics g, int ox, int oy) {
         for (Sparkle s : sparkles) {
             float life  = s.life / s.maxLife;
@@ -198,28 +159,19 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         }
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Разделитель между верхней панелью и инвентарём
-    // ════════════════════════════════════════════════════════════════
     private void drawDivider(GuiGraphics g, int x, int y) {
         g.fill(x + 3, y + DIVIDER_Y,     x + W - 3, y + DIVIDER_Y + 1, EDGE_DARK);
         g.fill(x + 3, y + DIVIDER_Y + 1, x + W - 3, y + DIVIDER_Y + 2, EDGE_GLOW);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Энергетический бар
-    // ════════════════════════════════════════════════════════════════
     private void drawBar(GuiGraphics g, int ox, int oy) {
         int x = ox + BAR_X;
         int y = oy + BAR_Y;
 
-        // Внешняя рамка
         g.fill(x - 2, y - 2, x + BAR_W + 2, y + BAR_H + 2, EDGE_DARK);
         g.fill(x - 1, y - 1, x + BAR_W + 1, y + BAR_H + 1, EDGE_GLOW);
-        // Фон бара
         g.fill(x, y, x + BAR_W, y + BAR_H, BAR_EMPTY);
 
-        // Заливка
         int filled = Math.max(0, Math.min(BAR_H, Math.round(smoothedEnergyHeight)));
         if (filled > 0) {
             int pct = menu.getEnergyPercent();
@@ -233,48 +185,33 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
                 g.fill(x, fy + row, x + BAR_W, fy + row + 1, color);
             }
 
-            // Блик слева
             int hl = mix(BAR_FILL_HI, 0xFFFFFFFF, 0.5f);
             g.fill(x, fy, x + 2, y + BAR_H, hl);
-            // Тень справа
             int shadow = mix(BAR_FILL_LOW, 0xFF000000, 0.4f);
             g.fill(x + BAR_W - 2, fy, x + BAR_W, y + BAR_H, shadow);
         }
 
-        // Горизонтальные риски (25%, 50%, 75%)
         for (int i = 1; i < 4; i++) {
             int ly = y + BAR_H - BAR_H * i / 4;
             g.fill(x, ly, x + BAR_W, ly + 1, 0x40FFFFFF);
         }
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Рамка выходного слота
-    // ════════════════════════════════════════════════════════════════
     private void drawSlot(GuiGraphics g, int x, int y, boolean withGlow) {
-        // Свечение если готово к крафту
         if (withGlow && (menu.getEnergyPercent() >= 100 || menu.getCraftingStatus() == 1)) {
             float p = (float) (Math.sin(animTime * 2.0) * 0.5 + 0.5);
             int   a = (int) (60f + p * 80f);
             g.fill(x - 2, y - 2, x + 22, y + 22, (a << 24) | 0xFFD700);
         }
-        // Внешняя тень
         g.fill(x - 1, y - 1, x + 21, y + 21, EDGE_DARK);
-        // Верхняя/левая грань (светлая)
         g.fill(x,      y,      x + 20, y + 1,  EDGE_GLOW);
         g.fill(x,      y,      x + 1,  y + 20, EDGE_GLOW);
-        // Нижняя/правая грань (яркая)
         g.fill(x,      y + 19, x + 20, y + 20, EDGE_BRIGHT);
         g.fill(x + 19, y,      x + 20, y + 20, EDGE_BRIGHT);
-        // Внутренний фон
         g.fill(x + 1, y + 1, x + 19, y + 19, SLOT_BG);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Сетка инвентаря игрока
-    // ════════════════════════════════════════════════════════════════
     private void drawInventory(GuiGraphics g, int ox, int oy) {
-        // 3 ряда × 9 ячеек
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 drawInvSlot(g,
@@ -282,7 +219,6 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
                         oy + INV_START_Y + row * 18 - 1);
             }
         }
-        // Хотбар
         for (int col = 0; col < 9; col++) {
             drawInvSlot(g,
                     ox + INV_START_X + col * 18 - 1,
@@ -291,29 +227,20 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
     }
 
     private void drawInvSlot(GuiGraphics g, int x, int y) {
-        // Внешняя тень
         g.fill(x - 1, y - 1, x + 19, y + 19, EDGE_DARK);
-        // Верхняя/левая грань
         g.fill(x,      y,      x + 18, y + 1,  EDGE_GLOW);
         g.fill(x,      y,      x + 1,  y + 18, EDGE_GLOW);
-        // Нижняя/правая грань
         g.fill(x,      y + 17, x + 18, y + 18, EDGE_BRIGHT);
         g.fill(x + 17, y,      x + 18, y + 18, EDGE_BRIGHT);
-        // Внутренний фон
         g.fill(x + 1, y + 1, x + 17, y + 17, SLOT_INNER);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Текстовые метки
-    // ════════════════════════════════════════════════════════════════
     private void drawLabels(GuiGraphics g, int ox, int oy) {
-        // Заголовок — по центру верхней панели
         String titleStr = this.title.getString();
         int    tx       = ox + (W - this.font.width(titleStr)) / 2;
-        g.drawString(this.font, titleStr, tx + 1, oy + 7, 0xFF000000, false); // тень
+        g.drawString(this.font, titleStr, tx + 1, oy + 7, 0xFF000000, false);
         g.drawString(this.font, titleStr, tx,     oy + 6, TEXT_TITLE,  false);
 
-        // Данные энергии — справа от бара
         int textX = ox + BAR_X + BAR_W + 6;
 
         g.drawString(this.font, "ENERGY",
@@ -325,7 +252,6 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         g.drawString(this.font, menu.getEnergyPercent() + "%",
                 textX, oy + BAR_Y + 33, TEXT_VALUE, false);
 
-        // Статус
         boolean ready       = menu.getEnergyPercent() >= 100;
         String  status      = ready ? "READY!" : "Charging...";
         int     statusColor = ready ? gentlePulse(TEXT_READY) : TEXT_MUTED;
@@ -333,23 +259,14 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
                 textX, oy + BAR_Y + 43, statusColor, false);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  renderLabels — пустой (всё рисуем сами в drawLabels)
-    // ════════════════════════════════════════════════════════════════
     @Override
     protected void renderLabels(GuiGraphics g, int mx, int my) {
-        // намеренно пусто
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  render (тултипы)
-    // ════════════════════════════════════════════════════════════════
     @Override
     public void render(GuiGraphics g, int mx, int my, float pt) {
         super.render(g, mx, my, pt);
 
-        // Тултип бара энергии
-        // isHovering принимает координаты ОТНОСИТЕЛЬНО leftPos/topPos
         if (this.isHovering(BAR_X, BAR_Y, BAR_W, BAR_H, mx, my)) {
             g.renderTooltip(this.font,
                     List.of(
@@ -366,8 +283,6 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
                     Optional.empty(), mx, my);
         }
 
-        // Тултип пустого выходного слота
-        // OUT_X/OUT_Y — координаты слота относительно leftPos/topPos
         boolean hoveringEmptyOutput =
                 this.isHovering(OUT_X, OUT_Y, 16, 16, mx, my) &&
                 this.menu.slots.get(0).getItem().isEmpty();
@@ -388,30 +303,21 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         this.renderTooltip(g, mx, my);
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Вспомогательные методы
-    // ════════════════════════════════════════════════════════════════
-
-    /** Пульсирующая прозрачность для «готово» */
     private int gentlePulse(int color) {
         float p = (float) (Math.sin(animTime * 1.5) * 0.5 + 0.5);
         int   a = (int) (220f + p * 35f);
         return (a << 24) | (color & 0xFFFFFF);
     }
 
-    /** Обводка с двойным фаской */
     private void fancyBevel(GuiGraphics g, int x, int y, int w, int h) {
-        // Верхняя + левая (светлые)
         g.fill(x,         y,         x + w,     y + 1,     EDGE_BRIGHT);
         g.fill(x,         y,         x + 1,     y + h,     EDGE_BRIGHT);
         g.fill(x + 1,     y + 1,     x + w - 1, y + 2,     EDGE_GLOW);
         g.fill(x + 1,     y + 1,     x + 2,     y + h - 1, EDGE_GLOW);
-        // Нижняя + правая (тёмные)
         g.fill(x,         y + h - 1, x + w,     y + h,     EDGE_DARK);
         g.fill(x + w - 1, y,         x + w,     y + h,     EDGE_DARK);
     }
 
-    /** Линейная интерполяция цветов (RGB, alpha всегда FF) */
     private static int mix(int a, int b, float t) {
         t = Math.max(0f, Math.min(1f, t));
         int r  = (int) ((a >> 16 & 0xFF) + ((b >> 16 & 0xFF) - (a >> 16 & 0xFF)) * t);
@@ -420,20 +326,17 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         return 0xFF000000 | r << 16 | gr << 8 | bl;
     }
 
-    // ════════════════════════════════════════════════════════════════
-    //  Вложенный класс — частица-искра
-    // ════════════════════════════════════════════════════════════════
     private static class Sparkle {
         float x, y;
         float life, maxLife;
         int   color;
 
         private static final int[] COLORS = {
-            TEXT_TITLE,      // -9985
-            TEXT_VALUE,      // -1522177
-            BAR_FILL_HI,     // -5222145
-            0xFFFFFFFF,      // белый
-            BAR_DONE         // -10496
+            TEXT_TITLE,
+            TEXT_VALUE,
+            BAR_FILL_HI,
+            0xFFFFFFFF,
+            BAR_DONE
         };
 
         Sparkle(Random r) { respawn(r); }
@@ -444,7 +347,6 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         }
 
         void respawn(Random r) {
-            // Искры летают внутри верхней подпанели (~165×62 px)
             x       = r.nextFloat() * 165f;
             y       = r.nextFloat() * 62f;
             life    = 0f;

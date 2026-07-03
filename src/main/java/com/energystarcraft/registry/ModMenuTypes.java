@@ -1,13 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.world.inventory.MenuType
- *  net.neoforged.neoforge.common.extensions.IMenuTypeExtension
- *  net.neoforged.neoforge.registries.DeferredRegister
- */
 package com.energystarcraft.registry;
 
 import com.energystarcraft.menu.EnergyForgeMenu;

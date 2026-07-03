@@ -1,14 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  net.minecraft.core.registries.Registries
- *  net.minecraft.resources.ResourceKey
- *  net.minecraft.world.level.block.Block
- *  net.minecraft.world.level.block.entity.BlockEntityType
- *  net.minecraft.world.level.block.entity.BlockEntityType$Builder
- *  net.neoforged.neoforge.registries.DeferredRegister
- */
 package com.energystarcraft.registry;
 
 import com.energystarcraft.blockentity.EnergyForgeBlockEntity;
