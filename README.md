@@ -57,6 +57,8 @@
 | NeoForge    | 21.11.42+     |
 | Java        | 21            |
 
+> 💡 **Looking for older Minecraft versions?** Check out the full version list on [Modrinth](https://modrinth.com/mod/energy-starcraft/versions).
+
 ---
 ## 🔧 Building from Source
 
