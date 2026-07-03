@@ -60,8 +60,6 @@
 ---
 ## 🔧 Building from Source
 
-Clone the repository and build the mod locally:
-
 ```bash
 # Clone the repository
 git clone https://github.com/neocporimiy/energystarcraft.git
@@ -69,11 +67,6 @@ cd energystarcraft
 
 # Build the mod
 ./gradlew build
+```
 
-# Output jar:
-# build/libs/energystarcraft-*.jar
-
-# Build the mod
-./gradlew build
-
-# Output: build/libs/energystarcraft-*.jar
+> 📦 The compiled jar will be located at `build/libs/energystarcraft-*.jar`
