@@ -1,41 +1,27 @@
 package com.energystarcraft.blockentity;
 
-import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 
-public class EnergyForgeEnergyStorage
-extends EnergyStorage {
-    public static final int MAX_CAPACITY = 350000000;
-    public static final int MAX_RECEIVE = 1000000;
+public class EnergyForgeEnergyStorage extends SimpleEnergyHandler {
+    public static final int MAX_CAPACITY = 350_000_000;
+    public static final int MAX_RECEIVE = 1_000_000;
     private final Runnable onChanged;
 
     public EnergyForgeEnergyStorage(Runnable onChanged) {
-        super(350000000, 1000000, 0);
+        super(MAX_CAPACITY, MAX_RECEIVE, 0);
         this.onChanged = onChanged;
     }
 
-    public int receiveEnergy(int maxReceive, boolean simulate) {
-        int received = super.receiveEnergy(maxReceive, simulate);
-        if (received > 0 && !simulate) {
-            this.onChanged.run();
-        }
-        return received;
+    @Override
+    protected void onEnergyChanged(int previousAmount) {
+        this.onChanged.run();
     }
 
     public int extractInternal(int amount) {
-        int extracted = Math.min(this.energy, amount);
-        this.energy -= extracted;
+        int extracted = Math.min(getAmountAsInt(), amount);
         if (extracted > 0) {
-            this.onChanged.run();
+            set(getAmountAsInt() - extracted);
         }
         return extracted;
     }
-
-    public void setEnergy(int value) {
-        this.energy = Math.max(0, Math.min(value, this.capacity));
-    }
-
-    public int getEnergy() {
-        return this.energy;
-    }
 }
-

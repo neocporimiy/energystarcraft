@@ -8,18 +8,18 @@ modId = "energystarcraft"
 version = "1.0.0"
 displayName = "Energy Starcraft"
 authors = "Developer"
-description = '''Craft Nether Stars using FE energy. Place the Energy Forge, feed 350M FE from any energy mod (Mekanism, AE2, Thermal) and get automatic production. New items: Amethyst Ingot, Electrolytic Module, Insulating Surface.'''
+description = '''Craft Nether Stars using FE energy. Place the Energy Forge, feed 350M FE from any energy mod (Mekanism, AE2, Thermal) and get automatic production.'''
 
 [[dependencies.energystarcraft]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.1.233,)"
+versionRange = "[21.1.280,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.energystarcraft]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.1,1.21.2)"
+versionRange = "[1.21.2,1.21.3)"
 ordering = "NONE"
 side = "BOTH"

@@ -2,8 +2,8 @@
 
 <div align="center">
 
-![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1+-00AD43?style=for-the-badge&logo=minecraft)
-![NeoForge](https://img.shields.io/badge/NeoForge-21.1.233-ff7f00?style=for-the-badge)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11-00AD43?style=for-the-badge&logo=minecraft)
+![NeoForge](https://img.shields.io/badge/NeoForge-21.11.42-ff7f00?style=for-the-badge)
 ![Java](https://img.shields.io/badge/Java-21-b07219?style=for-the-badge&logo=openjdk)
 ![License](https://img.shields.io/badge/License-MIT-4dcb38?style=for-the-badge)
 
@@ -13,18 +13,6 @@
 
 ---
 
-## ✨ Features
-
-<div align="center">
-
-| Feature | Description |
-|:-------:|:------------|
-| 🔮 **Automated Crafting** | Automatically crafts Nether Stars from FE energy |
-| ⚡ **350M FE = 1 Star** | Efficient energy-to-item conversion |
-| 🔌 **Universal Energy** | Compatible with Mekanism, AE2, Thermal, and other mods |
-| 🎨 **Custom GUI** | Beautiful animated energy bar with particle effects |
-| 📦 **Creative Tab** | Items available in creative inventory |
-
 </div>
 
 ---
@@ -32,22 +20,9 @@
 ## 🛠️ Installation
 
 1. **Download** the latest release from [Releases](../../releases)
-2. **Install** [NeoForge 21.1.233+](https://neoforged.net/)
+2. **Install** [NeoForge 21.11.42+](https://neoforged.net/)
 3. **Drop** `energystarcraft-*.jar` into your `mods` folder
 4. **Enjoy!** 🎉
-
-
-### Supported Energy Mods
-
-<div align="center">
-
-![Mekanism](https://img.shields.io/badge/-Mekanism-00ad43?style=flat-square) &nbsp;
-![Applied Energistics 2](https://img.shields.io/badge/-AE2-22c55e?style=flat-square) &nbsp;
-![Thermal Series](https://img.shields.io/badge/-Thermal-ef4444?style=flat-square) &nbsp;
-![Ender IO](https://img.shields.io/badge/-EnderIO-a855f7?style=flat-square) &nbsp;
-![Flux Networks](https://img.shields.io/badge/-FluxNetworks-3b82f6?style=flat-square)
-
-*Any mod using Forge's energy API*
 
 </div>
 
@@ -59,8 +34,8 @@
 
 | Software | Version |
 |:---------|:--------|
-| Minecraft | 1.21.1 - 1.21.2 |
-| NeoForge | 21.1.233+ |
+| Minecraft | 1.21.11 |
+| NeoForge | 21.11.42+ |
 | Java | 21 |
 
 </div>

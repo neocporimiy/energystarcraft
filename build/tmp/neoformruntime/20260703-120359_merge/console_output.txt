@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+
+Command-Line:
+ - C:\Users\neocp\AppData\Local\Temp\cursor-sandbox-cache\daf98fb43a0d85afdccb2dceee2aece2\gradle\jdks\eclipse_adoptium-21-amd64-windows\jdk-21.0.11+10\bin\java.exe
+ - -jar
+ - C:\Users\neocp\AppData\Local\Temp\cursor-sandbox-cache\daf98fb43a0d85afdccb2dceee2aece2\gradle\caches\modules-2\files-2.1\net.neoforged\mergetool\2.0.7\8d217011e2eac8f185c9351240282c780be53e72\mergetool-2.0.7-fatjar.jar
+ - --client
+ - C:\Users\neocp\AppData\Local\Temp\cursor-sandbox-cache\daf98fb43a0d85afdccb2dceee2aece2\gradle\caches\neoformruntime\intermediate_results\stripClient_5bedf0cb5eb5a3b5464603a273feae32c6fdfbc2_output.jar
+ - --server
+ - C:\Users\neocp\AppData\Local\Temp\cursor-sandbox-cache\daf98fb43a0d85afdccb2dceee2aece2\gradle\caches\neoformruntime\intermediate_results\stripServer_4d5a4ecb2822ee25bdbc7f0fb514840ad585ca8d_output.jar
+ - --ann
+ - 1.21.11
+ - --output
+ - ./output.jar
+ - --inject
+ - false
+--------------------------------------------------------------------------------
+

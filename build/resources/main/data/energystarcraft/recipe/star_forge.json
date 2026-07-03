@@ -1,0 +1,20 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "OIO",
+    "AMA",
+    "OIO"
+  ],
+  "key": {
+    "O": { "item": "minecraft:obsidian" },
+    "I": { "item": "energystarcraft:insulating_surface" },
+    "A": { "item": "energystarcraft:amethyst_ingot" },
+    "M": { "item": "energystarcraft:electrolyt_module" }
+  },
+  "result": {
+    "id": "energystarcraft:energy_forge",
+    "count": 1
+  }
+}
+

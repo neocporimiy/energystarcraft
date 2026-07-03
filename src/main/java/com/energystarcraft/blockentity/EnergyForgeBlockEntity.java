@@ -1,14 +1,12 @@
 package com.energystarcraft.blockentity;
 
 import com.energystarcraft.EnergyStarcraft;
-import com.energystarcraft.blockentity.EnergyForgeEnergyStorage;
 import com.energystarcraft.menu.EnergyForgeMenu;
 import com.energystarcraft.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -21,47 +19,48 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EnergyForgeBlockEntity
-extends BlockEntity
-implements MenuProvider {
+public class EnergyForgeBlockEntity extends BlockEntity implements MenuProvider {
     private static final int OUTPUT_SLOT = 0;
-    private final ItemStackHandler itemHandler = new ItemStackHandler(1){
-
-        protected void onContentsChanged(int slot) {
+    private final NonNullList<ItemStack> outputStacks = NonNullList.withSize(1, ItemStack.EMPTY);
+    public final ItemStacksResourceHandler outputHandler = new ItemStacksResourceHandler(outputStacks) {
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
             EnergyForgeBlockEntity.this.setChanged();
             EnergyForgeBlockEntity.this.syncToClient();
         }
     };
-    public final EnergyForgeEnergyStorage energyStorage = new EnergyForgeEnergyStorage(() -> ((EnergyForgeBlockEntity)this).setChanged());
-    private final ContainerData containerData = new ContainerData(){
-
+    public final EnergyForgeEnergyStorage energyStorage = new EnergyForgeEnergyStorage(() -> {
+        this.setChanged();
+        this.syncToClient();
+    });
+    private final ContainerData containerData = new ContainerData() {
+        @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> EnergyForgeBlockEntity.this.energyStorage.getEnergyStored() & 0xFFFF;
-                case 1 -> EnergyForgeBlockEntity.this.energyStorage.getEnergyStored() >> 16 & 0xFFFF;
-                case 2 -> {
-                    if (EnergyForgeBlockEntity.this.isCrafting()) {
-                        yield 1;
-                    }
-                    yield 0;
-                }
+                case 0 -> EnergyForgeBlockEntity.this.energyStorage.getAmountAsInt() & 0xFFFF;
+                case 1 -> EnergyForgeBlockEntity.this.energyStorage.getAmountAsInt() >> 16 & 0xFFFF;
+                case 2 -> EnergyForgeBlockEntity.this.isCrafting() ? 1 : 0;
                 default -> 0;
             };
         }
 
+        @Override
         public void set(int index, int value) {
         }
 
+        @Override
         public int getCount() {
             return 3;
         }
@@ -71,12 +70,16 @@ implements MenuProvider {
         super(ModBlockEntities.ENERGY_FORGE.get(), pos, blockState);
     }
 
-    public ItemStackHandler getOutputSlot() {
-        return this.itemHandler;
+    public ItemStacksResourceHandler getOutputHandler() {
+        return this.outputHandler;
+    }
+
+    private ItemStack getOutputStack() {
+        return this.outputHandler.getResource(OUTPUT_SLOT).toStack(this.outputHandler.getAmountAsInt(OUTPUT_SLOT));
     }
 
     public boolean canPlaceNetherStar() {
-        ItemStack output = this.itemHandler.getStackInSlot(0);
+        ItemStack output = getOutputStack();
         return output.isEmpty() || output.is(Items.NETHER_STAR) && output.getCount() < output.getMaxStackSize();
     }
 
@@ -85,59 +88,54 @@ implements MenuProvider {
     }
 
     public boolean isCrafting() {
-        return this.energyStorage.getEnergyStored() >= 350000000 && this.canPlaceNetherStar();
+        return this.energyStorage.getAmountAsInt() >= EnergyStarcraft.NETHER_STAR_COST && this.canPlaceNetherStar();
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, EnergyForgeBlockEntity blockEntity) {
-        boolean hasEnoughEnergy = blockEntity.energyStorage.getEnergyStored() >= 350000000;
-        boolean canOutput = blockEntity.canPlaceNetherStar();
-        if (hasEnoughEnergy && canOutput) {
+        if (blockEntity.energyStorage.getAmountAsInt() >= EnergyStarcraft.NETHER_STAR_COST && blockEntity.canPlaceNetherStar()) {
             blockEntity.performCraft();
         }
     }
 
     private void performCraft() {
-        if (this.energyStorage.getEnergyStored() < 350000000) {
+        if (this.energyStorage.getAmountAsInt() < EnergyStarcraft.NETHER_STAR_COST || !this.canPlaceNetherStar()) {
             return;
         }
-        if (!this.canPlaceNetherStar()) {
+
+        int extracted = this.energyStorage.extractInternal(EnergyStarcraft.NETHER_STAR_COST);
+        if (extracted < EnergyStarcraft.NETHER_STAR_COST) {
             return;
         }
-        int extracted = this.energyStorage.extractInternal(350000000);
-        if (extracted < 350000000) {
-            this.energyStorage.receiveEnergy(extracted, false);
-            return;
-        }
-        ItemStack output = this.itemHandler.getStackInSlot(0);
+
+        ItemStack output = getOutputStack();
         if (output.isEmpty()) {
-            this.itemHandler.setStackInSlot(0, new ItemStack((ItemLike)Items.NETHER_STAR));
+            this.outputHandler.set(OUTPUT_SLOT, ItemResource.of(Items.NETHER_STAR), 1);
         } else {
-            output.grow(1);
+            this.outputHandler.set(OUTPUT_SLOT, ItemResource.of(Items.NETHER_STAR), output.getCount() + 1);
         }
+
         this.setChanged();
         this.syncToClient();
-        EnergyStarcraft.LOGGER.debug("Energy Forge at {} crafted a Nether Star!", (Object)this.worldPosition);
+        EnergyStarcraft.LOGGER.debug("Energy Forge at {} crafted a Nether Star!", this.worldPosition);
     }
 
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put("Items", (Tag)this.itemHandler.serializeNBT(registries));
-        tag.putInt("Energy", this.energyStorage.getEnergyStored());
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        this.outputHandler.serialize(output);
+        this.energyStorage.serialize(output);
     }
 
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        if (tag.contains("Items")) {
-            this.itemHandler.deserializeNBT(registries, tag.getCompound("Items"));
-        }
-        if (tag.contains("Energy")) {
-            this.energyStorage.setEnergy(tag.getInt("Energy"));
-        }
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        this.outputHandler.deserialize(input);
+        this.energyStorage.deserialize(input);
     }
 
     @Nullable
     public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create((BlockEntity)this);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @NotNull
@@ -146,24 +144,27 @@ implements MenuProvider {
     }
 
     private void syncToClient() {
-        if (this.level != null && !this.level.isClientSide) {
+        if (this.level != null && !this.level.isClientSide()) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         }
     }
 
-    public void dropContents(Level level, BlockPos pos) {
-        if (level != null && !level.isClientSide()) {
-            for (int i = 0; i < this.itemHandler.getSlots(); ++i) {
-                ItemStack stack = this.itemHandler.getStackInSlot(i);
-                if (stack.isEmpty()) continue;
-                Block.popResource((Level)level, (BlockPos)pos, (ItemStack)stack);
+    public void dropContents(LevelAccessor level, BlockPos pos) {
+        if (level instanceof Level serverLevel && !serverLevel.isClientSide()) {
+            for (int i = 0; i < this.outputHandler.size(); ++i) {
+                ItemStack stack = this.outputHandler.getResource(i).toStack(this.outputHandler.getAmountAsInt(i));
+                if (stack.isEmpty()) {
+                    continue;
+                }
+                Block.popResource(serverLevel, pos, stack);
+                this.outputHandler.set(i, ItemResource.EMPTY, 0);
             }
         }
     }
 
     @NotNull
     public Component getDisplayName() {
-        return Component.translatable((String)"gui.energystarcraft.energy_forge");
+        return Component.translatable("gui.energystarcraft.energy_forge");
     }
 
     @Nullable
@@ -173,9 +174,4 @@ implements MenuProvider {
         }
         return null;
     }
-
-    public IEnergyStorage getEnergyStorage(@Nullable Direction side) {
-        return this.energyStorage;
-    }
 }
-

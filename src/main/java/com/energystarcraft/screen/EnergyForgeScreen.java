@@ -268,18 +268,16 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
         super.render(g, mx, my, pt);
 
         if (this.isHovering(BAR_X, BAR_Y, BAR_W, BAR_H, mx, my)) {
-            g.renderTooltip(this.font,
+            g.setTooltipForNextFrame(this.font,
                     List.of(
-                        Component.literal(
-                                NUM.format(menu.getEnergyStored()) + " / " +
-                                NUM.format(menu.getMaxEnergyStored()) + " FE")
-                            .withStyle(ChatFormatting.GOLD),
-                        Component.literal(
-                                menu.getEnergyPercent() + "% charged")
-                            .withStyle(ChatFormatting.LIGHT_PURPLE),
-                        Component.literal(
-                                "350,000,000 FE = 1 Nether Star")
-                            .withStyle(ChatFormatting.DARK_PURPLE)),
+                            Component.literal(
+                                            NUM.format(menu.getEnergyStored()) + " / " +
+                                                    NUM.format(menu.getMaxEnergyStored()) + " FE")
+                                    .withStyle(ChatFormatting.GOLD),
+                            Component.literal(menu.getEnergyPercent() + "% charged")
+                                    .withStyle(ChatFormatting.LIGHT_PURPLE),
+                            Component.literal("350,000,000 FE = 1 Nether Star")
+                                    .withStyle(ChatFormatting.DARK_PURPLE)),
                     Optional.empty(), mx, my);
         }
 
@@ -297,7 +295,7 @@ public class EnergyForgeScreen extends AbstractContainerScreen<EnergyForgeMenu> 
                                    menu.getMaxEnergyStored() -
                                    menu.getEnergyStored()) + " more FE")
                                .withStyle(ChatFormatting.LIGHT_PURPLE);
-            g.renderTooltip(this.font, line, mx, my);
+            g.setTooltipForNextFrame(this.font, line, mx, my);
         }
 
         this.renderTooltip(g, mx, my);
