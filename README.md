@@ -2,8 +2,7 @@
 
 <div align="center">
 
-![Minecraft](https://img.shields.io/badge/Minecraft-1.21.11-00AD43?style=for-the-badge&logo=minecraft)
-![NeoForge](https://img.shields.io/badge/NeoForge-21.11.42-ff7f00?style=for-the-badge)
+[![Modrinth](https://img.shields.io/badge/Modrinth-1.21.1+-00AD43?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/energy-starcraft)
 ![Java](https://img.shields.io/badge/Java-21-b07219?style=for-the-badge&logo=openjdk)
 ![License](https://img.shields.io/badge/License-MIT-4dcb38?style=for-the-badge)
 
@@ -28,23 +27,8 @@
 
 ---
 
-## 📦 Requirements
-
-<div align="center">
-
-| Software | Version |
-|:---------|:--------|
-| Minecraft | 1.21.11 |
-| NeoForge | 21.11.42+ |
-| Java | 21 |
-
-</div>
-
----
-
 ## 🔧 Building from Source
 
-```bash
 # Clone the repository
 git clone https://github.com/neocporimiy/energystarcraft.git
 cd energystarcraft
@@ -53,7 +37,6 @@ cd energystarcraft
 ./gradlew build
 
 # Output: build/libs/energystarcraft-*.jar
-```
 
 ---
 
