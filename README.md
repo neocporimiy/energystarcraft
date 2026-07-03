@@ -53,11 +53,11 @@
 
 | Requirement | Version       |
 |-------------|---------------|
-| Minecraft   | 1.21.11       |
+| Minecraft   | 1.21.11 *    |
 | NeoForge    | 21.11.42+     |
 | Java        | 21            |
 
-> 💡 **Looking for older Minecraft versions?** Check out the full version list on [Modrinth](https://modrinth.com/mod/energy-starcraft/versions).
+<sub>\* For older Minecraft versions, check the full list on [Modrinth](https://modrinth.com/mod/energy-starcraft/versions).</sub>
 
 ---
 ## 🔧 Building from Source
