@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "WSW",
+    "ABA",
+    "WSW"
+  ],
+  "key": {
+    "W": { "item": "minecraft:crying_obsidian" },
+    "S": { "item": "minecraft:nether_star" },
+    "A": { "item": "minecraft:amethyst_shard" },
+    "B": { "item": "minecraft:netherite_block" }
+  },
+  "result": {
+    "id": "energystarcraft:energy_forge",
+    "count": 1
+  }
+}
